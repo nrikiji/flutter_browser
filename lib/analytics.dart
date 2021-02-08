@@ -26,4 +26,7 @@ enum AnalyticsEventType {
   selectSearchEngine,
   selectSearchTypeInclude,
   selectSearchTypeExclude,
+  openContact,
+  openReview,
+  openStore,
 }

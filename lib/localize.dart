@@ -38,6 +38,10 @@ class Messages {
   final String searchKeyword;
   final String settings;
   final String basicSetting;
+  final String otherSetting;
+  final String contact;
+  final String reviewApp;
+  final String launchStore;
   final String registeredWebsites;
   final String registrationMethod;
   final String registerWebsite;
@@ -84,6 +88,10 @@ class Messages {
     @required this.searchKeyword,
     @required this.settings,
     @required this.basicSetting,
+    @required this.otherSetting,
+    @required this.contact,
+    @required this.reviewApp,
+    @required this.launchStore,
     @required this.registeredWebsites,
     @required this.registerWebsite,
     @required this.editWebsite,
@@ -142,6 +150,10 @@ class Messages {
         searchKeyword: '検索キーワードを入力',
         settings: '設定',
         basicSetting: '基本設定',
+        otherSetting: 'その他',
+        contact: 'ご意見、ご要望',
+        reviewApp: 'このアプリを評価する',
+        launchStore: 'AppStoreで開く',
         registeredWebsites: '登録中のWebサイト',
         registrationMethod: '登録方法を選択してください',
         registerWebsite: 'Webサイトを登録',
@@ -190,6 +202,10 @@ class Messages {
         searchKeyword: 'Search for keyword',
         settings: 'Settings',
         basicSetting: 'Basic Setting',
+        otherSetting: 'Other',
+        contact: 'Contact・Request',
+        reviewApp: 'Review this app',
+        launchStore: 'Launch AppStore',
         registeredWebsites: 'Registered Websites',
         registrationMethod: 'Please select a registration method',
         editWebsite: 'Edit Website',

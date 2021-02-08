@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_browser/analytics.dart';
 import 'package:flutter_browser/helper/util_helper.dart';
 import 'package:flutter_riverpod/all.dart';
 import 'package:flutter_browser/entity/setting.dart';
@@ -11,6 +12,7 @@ import 'package:flutter_browser/screen/settings/hosts_screen.dart';
 import 'package:flutter_browser/screen/settings/select_host_screen.dart';
 import 'package:flutter_browser/screen/settings/select_search_engine_screen.dart';
 import 'package:gap/gap.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 final settingsController = StateNotifierProvider((ref) => SettingsController());
 
@@ -60,7 +62,7 @@ class SettingsScreen extends StatelessWidget {
                   }();
                   return _Item(
                     AppLocalizations.of(context).howToSearch,
-                    SettingsSelectHostScreen(),
+                    screen: SettingsSelectHostScreen(),
                     subtitle: x["name"] + "（$count）",
                   );
                 },
@@ -70,7 +72,7 @@ class SettingsScreen extends StatelessWidget {
               /// 登録中のサイト
               _Item(
                 AppLocalizations.of(context).registeredWebsites,
-                SettingsHostsScreen(),
+                screen: SettingsHostsScreen(),
                 subtitle: "${hosts.length}" + AppLocalizations.of(context).unit,
               ),
               Divider(),
@@ -81,10 +83,52 @@ class SettingsScreen extends StatelessWidget {
                   .where((x) => x["id"] == setting.searchEngine)
                   .map((x) => _Item(
                         AppLocalizations.of(context).searchEngine,
-                        SettingsSelectSearchEngineScreen(),
+                        screen: SettingsSelectSearchEngineScreen(),
                         subtitle: x["name"],
                       ))
                   .toList(growable: false),
+              Divider(),
+
+              /// その他
+              _SectionHeader(AppLocalizations.of(context).otherSetting),
+              Gap(8),
+
+              /// このアプリを評価する
+              _Item(
+                AppLocalizations.of(context).reviewApp,
+                onTap: () {
+                  Analytics.analyticsLogEvent(AnalyticsEventType.openReview);
+                  launch(
+                    "https://itunes.apple.com/jp/app/id1551822594?mt=8&action=write-review",
+                    forceSafariVC: false,
+                  );
+                },
+              ),
+              Divider(),
+
+              /// AppStoreで開く
+              _Item(
+                AppLocalizations.of(context).launchStore,
+                onTap: () {
+                  Analytics.analyticsLogEvent(AnalyticsEventType.openStore);
+                  launch(
+                    "https://apps.apple.com/jp/app/id1551822594",
+                    forceSafariVC: false,
+                  );
+                },
+              ),
+              Divider(),
+
+              /// ご意見、ご要望
+              _Item(
+                AppLocalizations.of(context).contact,
+                onTap: () {
+                  Analytics.analyticsLogEvent(AnalyticsEventType.openContact);
+                  launch(
+                    "https://docs.google.com/forms/d/e/1FAIpQLSdQ7hJ8RwMY0AFzl7a9WjrLK5dskHl1u3pV45KvyoT7zfgDAQ/viewform?usp=sf_link",
+                  );
+                },
+              ),
               Divider(),
 
               Gap(8),
@@ -126,9 +170,10 @@ class _SectionHeader extends StatelessWidget {
 class _Item extends StatelessWidget {
   final String title;
   final Widget screen;
+  final Function onTap;
   String subtitle;
 
-  _Item(this.title, this.screen, {this.subtitle});
+  _Item(this.title, {this.subtitle, this.screen, this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -139,13 +184,15 @@ class _Item extends StatelessWidget {
         Icons.keyboard_arrow_right,
         size: 30.0,
       ),
-      onTap: () {
-        Navigator.of(context).push(
-          MaterialPageRoute(
-            builder: (context) => screen,
-          ),
-        );
-      },
+      onTap: onTap != null
+          ? onTap
+          : () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => screen,
+                ),
+              );
+            },
     );
   }
 }
