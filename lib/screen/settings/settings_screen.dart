@@ -125,7 +125,7 @@ class SettingsScreen extends StatelessWidget {
                 onTap: () {
                   Analytics.analyticsLogEvent(AnalyticsEventType.openContact);
                   launch(
-                    "https://docs.google.com/forms/d/e/1FAIpQLSdQ7hJ8RwMY0AFzl7a9WjrLK5dskHl1u3pV45KvyoT7zfgDAQ/viewform?usp=sf_link",
+                    "https://docs.google.com/forms/d/e/1FAIpQLSeVn6M9J-ugAo4CRf7zgAoRvJ0-qZtO5VgZU_z_Rh2K0ijUDQ/viewform?usp=sf_link",
                   );
                 },
               ),
